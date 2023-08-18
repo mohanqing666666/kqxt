@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.OutWorkRecordMapper">
+    <select id="getOutWorkRecords" resultType="org.sang.bean.OutWorkRecord">
+        SELECT * FROM out_work_record where 1=1
+        <if test="name!=null">
+            and name LIKE concat('%',#{name},'%')
+        </if>
+        order by name, time
+    </select>
+    <insert id="insertOutWorkRecord" parameterType="org.sang.bean.WorkRecord" useGeneratedKeys="false" >
+        INSERT INTO out_work_record SET time=#{time},name=#{name},account=#{account},department=#{department},first_work_time=#{first_work_time},last_work_time=#{last_work_time},clock_in_count=#{clock_in_count},clock_in_time=#{clock_in_time},clock_in_location=#{clock_in_location},bz=#{bz},clock_in_time1=#{clock_in_time1},clock_in_location1=#{clock_in_location1},bz1=#{bz1},clock_in_time2=#{clock_in_time2},clock_in_location2=#{clock_in_location2},bz2=#{bz2}
+    </insert>
+    <update id="delectOutWorkRecord">
+        truncate table out_work_record
+    </update>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.WorkRecordMapper">
+    <select id="getWorkRecords" resultType="org.sang.bean.WorkRecord">
+        SELECT * FROM work_record where 1=1
+        <if test="name!=null">
+            and name LIKE concat('%',#{name},'%')
+        </if>
+        order by name, time
+    </select>
+    <insert id="insertWorkRecord" parameterType="org.sang.bean.WorkRecord" useGeneratedKeys="false" >
+        INSERT INTO work_record SET time=#{time},name=#{name},account=#{account},rule=#{rule},shift=#{shift},first_work_time=#{first_work_time},last_work_time=#{last_work_time},apply=#{apply},correct_status=#{correct_status},out_count=#{out_count},out_long=#{out_long},evection_day=#{evection_day},clock_in_time=#{clock_in_time},clock_in_status=#{clock_in_status},clock_in_time1=#{clock_in_time1},clock_in_status1=#{clock_in_status1}
+    </insert>
+    <update id="delectWorkRecord">
+        truncate table work_record
+    </update>
+</mapper>

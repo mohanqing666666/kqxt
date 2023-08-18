@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.PersonManageMapper">
+    <select id="getPersons" resultType="org.sang.bean.PersonManage">
+        SELECT * FROM person_manage where 1=1
+        <if test="name!=null">
+            and name LIKE concat('%',#{name},'%')
+        </if>
+    </select>
+    <select id="getMaxidPersons" resultType="java.lang.String">
+        select max(id) as maxid from person_manage
+    </select>
+    <insert id="savePersons" parameterType="org.sang.bean.PersonManage"  keyProperty="id">
+        INSERT INTO person_manage set id=#{id},pid=#{pid},name=#{name},code=#{code},location=#{location},on_time=#{on_time},out_time=#{out_time},work_condition=#{work_condition},bz=#{bz}
+    </insert>
+    <delete id="deletePersons">
+        DELETE FROM person_manage WHERE id = #{id}
+    </delete>
+    <update id="updatePersons" parameterType="org.sang.bean.PersonManage" keyProperty="id">
+        update person_manage set id=#{id},pid=#{pid},name=#{name},code=#{code},location=#{location},on_time=#{on_time},out_time=#{out_time},work_condition=#{work_condition},bz=#{bz}
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+        </where>
+    </update>
+</mapper>

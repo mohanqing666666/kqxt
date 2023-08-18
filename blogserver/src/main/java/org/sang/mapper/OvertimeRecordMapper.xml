@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.OvertimeRecordMapper">
+    <select id="getOvertimeRecords" resultType="org.sang.bean.Overtimerecord">
+        SELECT * FROM overtimerecord where 1=1
+        <if test="name!=null">
+            and name LIKE concat('%',#{name},'%')
+        </if>
+        order by name, starttime
+    </select>
+    <select id="getOvertimeRecordsByAccount" resultType="org.sang.bean.Overtimerecord">
+        SELECT * FROM overtimerecord where 1=1
+        <if test="account!=null">
+            and account LIKE concat('%',#{account},'%')
+        </if>
+        order by name, starttime
+    </select>
+    <insert id="insertOvertimeRecord" parameterType="org.sang.bean.Overtimerecord" useGeneratedKeys="false" >
+        INSERT INTO overtimerecord SET name=#{name},record=#{record},starttime=#{starttime},endtime=#{endtime},type='加班',resultstatus=#{resultstatus},code=#{code},longtime=#{longtime}
+    </insert>
+    <update id="delectOvertimeRecord">
+        truncate table overtimerecord
+    </update>
+</mapper>

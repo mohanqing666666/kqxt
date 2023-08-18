@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.StatisticsResultMapper">
+    <insert id="insertStatisticResult" parameterType="org.sang.bean.StatisticsResult" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO statistics_result SET time=#{time},name=#{name},classes=#{classes},first_work_time=#{first_work_time},last_work_time=#{last_work_time},out_fist_time=#{out_fist_time},out_last_time=#{out_last_time},points=#{points},location=#{location},applys=#{applys},no_clock=#{no_clock},proofread=#{proofread},account=#{account},code=#{code},id=#{id},vacate=#{vacate},evection=#{evection},overtime=#{overtime},goout=#{goout},replenish=#{replenish},absenteeism=#{absenteeism}
+    </insert>
+    <select id="getStatisticsResultList" resultType="org.sang.bean.StatisticsResult">
+        SELECT a.* FROM statistics_result as a    left join person_manage as b   on a.code = b.code   where 1=1
+        <if test="name!=null">
+            and a.name LIKE concat('%',#{name},'%')
+        </if>
+        order by b.pid, b.id, b.name, a.time
+    </select>
+    <select id="getStatisticsResultListToExport" resultType="java.util.HashMap">
+        SELECT name as '名称', classes as '班次', time as '日期', first_work_time as '上班最早', last_work_time as '下班最晚', out_fist_time as '外出最早', out_last_time as '外出最晚', points as '迟到早退扣分' ,location as '外出打卡地点', applys as '考勤申请', points as '迟到早退扣分' , no_clock as  '未打卡次数', evection as '出差', overtime as '加班', goout as '外出', replenish as '补打卡', absenteeism as '旷工', vacate as '请假', proofread as '校对状态' FROM statistics_result where 1=1
+        order by name, time
+    </select>
+    <select id="getAllResultList" resultType="java.util.HashMap">
+       select a.account, c.code, a.name, left(a.time,10) as time, a.shift, a.first_work_time firstWorkTime, a.last_work_time lastWorkTime, b.first_work_time firstOutTime, b.last_work_time lastOutTime, b.clock_in_location outLocation, a.apply, a.clock_in_status status1, a.clock_in_status1 status2, b.clock_in_count outClockCount from work_record as a left join out_work_record as b on a.name = b.name and left(a.time,10) =b.time and a.account = b.account left join person_manage as c on c.name = a.name ORDER BY a.name, left(a.time,10)
+    </select>
+    <select id="getAllResultListByMonth" resultType="java.util.HashMap">
+         select code,name, account, sum(no_clock) as no_clock, sum(points) as points from statistics_result sr where 1=1
+        <if test="name!=null">
+            and name LIKE concat('%',#{name},'%')
+        </if>
+           group by code,account,name order by name
+    </select>
+    <select id="getAllResultListByMonthToExport" resultType="java.util.HashMap">
+        select code as '考勤号',name as '名称', account '账号', sum(no_clock)  as '本月未打卡次数', sum(points) as '本月扣分总和' from statistics_result sr where 1=1
+        <if test="name!=null">
+            and name LIKE concat('%',#{name},'%')
+        </if>
+           group by code,account,name order by name
+    </select>
+    <update id="delectStatisticResult">
+        truncate table statistics_result
+    </update>
+</mapper>
