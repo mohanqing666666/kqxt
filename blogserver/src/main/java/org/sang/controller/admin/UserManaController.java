@@ -185,7 +185,7 @@ public class UserManaController {
     }
 
     /**
-     * 考勤计算计算
+     * 考勤计算计算（12）
      * @return
      */
     @RequestMapping(value = "/doAttendanceStatistics" , method = RequestMethod.POST)
