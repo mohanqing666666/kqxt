@@ -3,7 +3,7 @@ module.exports = {
         id:234,
         name:'testname',
         code:'32rs',
-        record:'dev'
+        record:'main'
     }
 
 
