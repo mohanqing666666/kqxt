@@ -5,7 +5,7 @@ module.exports = {
         code:'32rs',
         record:'main',
         age:26,
-        devolop:'测试使用',
+        devolop:'修复bug',
         year:2023
     }
 
