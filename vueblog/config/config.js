@@ -3,7 +3,9 @@ module.exports = {
         id:234,
         name:'testname',
         code:'32rs',
-        record:'main'
+        record:'main',
+        age:26,
+        devolop:'测试使用',
     }
 
 
