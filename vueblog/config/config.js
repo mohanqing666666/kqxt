@@ -6,6 +6,7 @@ module.exports = {
         record:'main',
         age:26,
         devolop:'测试使用',
+        year:2023,
     }
 
 
